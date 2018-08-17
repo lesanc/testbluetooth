@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">testbluetooth</string>
+    <string name="scan">扫描</string>
+    <string name="short_vibrate">短震/嘿嘿嘿</string>
+    <string name="long_vibrate">长震/呵呵呵</string>
+    <string name="no_stop">不要停/哈哈哈</string>
+    <string name="stop">停下来</string>
+    <string name="steps">走了多少步</string>
+    <string name="power">电池电量</string>
+    <string name="connect_state">连接状态：未连接</string>
+</resources>
