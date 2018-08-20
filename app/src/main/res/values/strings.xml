@@ -7,5 +7,6 @@
     <string name="stop">停下来</string>
     <string name="steps">走了多少步</string>
     <string name="power">电池电量</string>
-    <string name="connect_state">连接状态：未连接</string>
+    <string name="connect_state1">连接状态：未连接</string>
+    <string name="connect_state2">连接状态：扫描中</string>
 </resources>

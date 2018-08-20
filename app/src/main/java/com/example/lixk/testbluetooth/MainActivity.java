@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String TAG = "MainActivity";
     private Button mBtnScan, mBtnShortVibrate, mBtnLongVibrate, mBtnNoStop, mBtnStop;
     private TextView mTvSteps, mTvPower, mTvConnectState;
+    private RecyclerView mRecyclerView;
     private BluetoothAdapter mBluetoothAdapter;
-    private HashMap<String, BluetoothDevice> mDeviceMap = new HashMap<>();
+    private List<BluetoothDevice> mDeviceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             openBlueTooth();
         }
 
-        mDeviceMap.put("ok1", null);
-        mDeviceMap.put("ok2", null);
-        mDeviceMap.put("ok3", null);
-        mDeviceMap.put("ok4", null);
-        
-        RecyclerView recyclerView = findViewById(R.id.device_list);
-        DeviceAdapter deviceAdapter = new DeviceAdapter(this, mDeviceMap);
+        mRecyclerView = findViewById(R.id.device_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(deviceAdapter);
+        mRecyclerView.setLayoutManager(layoutManager);
     }
 
     private void initView() {
@@ -106,21 +100,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             openBlueTooth();
         }
 
-        mDeviceMap.clear();
+        mDeviceList.clear();
         BluetoothLeScanner scanner = mBluetoothAdapter.getBluetoothLeScanner();
         Log.d(TAG, "scan: ");
+        mTvConnectState.setText(getString(R.string.connect_state2));
+
         scanner.startScan(new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
                 super.onScanResult(callbackType, result);
-               
+
                 BluetoothDevice device = result.getDevice();
-                if (mDeviceMap.get(device.getName()) == null){
-                    mDeviceMap.put(device.getName(), device);
-                    Log.d(TAG, "onScanResult: name = " + " " + device.getName() + " " + device.getAddress());
+
+                if (device == null || device.getName() == null){
+                    return;
                 }
 
-                Log.d(TAG, "onScanResult: " + callbackType + " " + mDeviceMap.size());
+                if (!mDeviceList.contains(device)){
+                    mDeviceList.add(device);
+                    DeviceAdapter adapter = new DeviceAdapter(MainActivity.this, mDeviceList);
+                    adapter.setOnItemClickListener(new DeviceAdapter.OnItemClickListener() {
+                        @Override
+                        public void onClick(View view, BluetoothDevice device) {
+                            Log.d(TAG, "onClick: " + device.getName());
+                        }
+                    });
+                    mRecyclerView.setAdapter(adapter);
+                }
+                Log.d(TAG, "onScanResult: " + callbackType + " " + mDeviceList.size());
             }
             
             

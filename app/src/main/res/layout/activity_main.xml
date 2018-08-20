@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center"
-        android:text="@string/connect_state"
+        android:text="@string/connect_state1"
         app:layout_constraintTop_toBottomOf="@id/power" />
 
     <android.support.v7.widget.RecyclerView
