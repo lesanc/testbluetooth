@@ -9,4 +9,9 @@
     <string name="power">电池电量</string>
     <string name="connect_state1">连接状态：未连接</string>
     <string name="connect_state2">连接状态：扫描中</string>
+    <string name="connect_state3">连接状态：连接中</string>
+    <string name="connect_state4">连接状态：正在连接</string>
+    <string name="connect_state5">连接状态：已连接</string>
+    <string name="connect_state6">连接状态：正在断开</string>
+    <string name="connect_state7">连接状态：已断开</string>
 </resources>
